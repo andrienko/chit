@@ -1,5 +1,6 @@
 console.clear();
-var template = {
+
+var wee = {
     cache:{},
     render:function(template_name,data) {
         return this.get_template_function(template_name)(data);
