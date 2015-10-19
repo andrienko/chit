@@ -1,7 +1,7 @@
-Wee.js
+Chit.js
 ===
 
-Wee.JS is a tiny js template engine based on [a post by John Resig](http://ejohn.org/blog/javascript-micro-templating/)
+Chit.JS is a tiny js template engine based on [a post by John Resig](http://ejohn.org/blog/javascript-micro-templating/)
 
 It is just a snippet.
 
@@ -10,7 +10,7 @@ Example
 
 Just add something like that to header:
 
-    <script type="text/html" id="wee_hello">
+    <script type="text/html" id="chit_hello">
       <h1><%= title%></h1>
       <ul>
       <% for ( var i = 0; i < users.length; i++ ) { %>
@@ -29,6 +29,6 @@ Then call something like
         title:'User list:'
     };
 
-    wee.render('hello',data);
+    chit.render('hello',data);
 
 The template will then be cached and rendered. Render result will be returned/

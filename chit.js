@@ -1,6 +1,7 @@
 (function(global) {
     'use strict';
 
+    var prefix = 'chit_';
     var template = {
         cache: {},
 
@@ -10,7 +11,7 @@
         },
 
         get_body: function (name) {
-            return document.getElementById('wee_' + name).innerHTML;
+            return document.getElementById(prefix + name).innerHTML;
         },
 
         function_text: function(content) {
@@ -33,7 +34,7 @@
         }
     };
 
-    global.wee = {
+    global.chit = {
         render: function(template_name,data) {
             return template.get_function(template_name)(data);
         }
