@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wee.JS test</title>
+    <script src="wee.js"></script>
+
+    <script type="text/html" id="wee_test">
+
+        <%
+            var total = names.length;
+            names.sort();
+        %>
+
+        <p>Well, <%=greeting%>. There are <%=total%> total people:</p>
+
+        <%=names.slice(0, -1).join(', ')%> and <%=names[total-1]%>.
+        <b><%=names[0]%></b> is the first in a list.
+
+    </script>
+
+</head>
+<body>
+
+</body>
+
+<script>
+    var data = {
+        greeting: 'Hello',
+        names: [
+            'Jessie',
+            'Mark',
+            'Peter',
+            'Nikolai',
+            'Vera',
+            'Olga'
+        ]
+    };
+
+    document.body.innerHTML = wee.render('test', data);
+</script>
+
+</html>

@@ -1,51 +1,42 @@
-console.clear();
+(function(global) {
+    'use strict';
 
-var wee = {
-    cache:{},
-    render:function(template_name,data) {
-        return this.get_template_function(template_name)(data);
-    },
-    get_template_function:function(name) {
+    var template = {
+        cache: {},
 
-        if(typeof this.cache[name] == 'undefined') {
-            this.cache[name] = this.generate_function(this.get_template_body(name));
+        get_function: function (name) {
+            this.cache[name] = this.cache[name] || this.generate_function(this.get_body(name));
+            return this.cache[name];
+        },
+
+        get_body: function (name) {
+            return document.getElementById('wee_' + name).innerHTML;
+        },
+
+        function_text: function(content) {
+            return "var p=[];" +
+                "with(d){p.push('" +
+                content
+                    .replace(/[\r\t\n]|\s{1,}/g, " ")
+                    .split("<%").join("\t")
+                    .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+                    .replace(/\t=(.*?)%>/g, "',$1,'")
+                    .split("\t").join("');")
+                    .split("%>").join("p.push('")
+                    .split("\r").join("\\'")
+                    .replace(/p\.push\(''\);/g, '')
+                + "');}return p.join('');";
+        },
+
+        generate_function: function (content) {
+            return new Function("d", this.function_text(content));
         }
-        return this.cache[name];
-    },
-    get_template_body:function(name) {
-        return document.getElementById('template_'+name).innerHTML;
-    },
-    generate_function: function(template_content) {
-        var f = "var p=[];" +
-            "with(d){p.push('" +
-            template_content
-                .replace(/[\r\t\n]|\s{2,}/g, " ")
-                .split("<%").join("\t")
-                .replace(/ {1,}/g,' ')
-                .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                .replace(/\t=(.*?)%>/g, "',$1,'")
-                .split("\t").join("');")
-                .split("%>").join("p.push('")
-                .split("\r").join("\\'")
-            + "');}return p.join('');";
+    };
 
-        f=f.replace(/p\.push\(''\);/g,'');
+    global.wee = {
+        render: function(template_name,data) {
+            return template.get_function(template_name)(data);
+        }
+    };
 
-        console.log(f);
-
-        return new Function("d",f);
-
-    }
-};
-
-
-var data = {
-    test:'Hello',
-    names:[
-        'Jessie',
-        'Mark',
-        'Peter'
-    ]
-};
-
-document.body.innerHTML = template.render('test',data);
+})(window);

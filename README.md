@@ -10,7 +10,7 @@ Example
 
 Just add something like that to header:
 
-    <script type="text/html" id="template_hello">
+    <script type="text/html" id="wee_hello">
       <h1><%= title%></h1>
       <ul>
       <% for ( var i = 0; i < users.length; i++ ) { %>
